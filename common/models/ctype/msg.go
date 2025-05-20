@@ -1,23 +1,11 @@
-package model
+package ctype
 
 import (
-	"fim_server/common/models"
+	"database/sql/driver"
+	"encoding/json"
 	"time"
 )
 
-type ChatModel struct {
-	models.Model
-	SendUserID uint      `json:"sendUserId"`
-	RevUserID  uint      `json:"revUserID"`
-	MsgType    int       `json:"msgType"`    //消息类型 1文本类型 2图片消息 3视频消息 4文件消息 5语音消息 6语音通话 7视频通话 8撤回消息 9回复消息 10引用消息
-	Msgpreview string    `json:"msgpreview"` //消息预览
-	Msg        Msg       `json:"msg"`        //消息内容
-	SystemMsg  SystemMsg `json:"systemMsg"`  //系统提示
-}
-
-type SystemMsg struct {
-	Type int8 `json:"type"` //违规类型 1 涉黄 2 涉恐 3 涉政 不正当言论
-}
 type Msg struct {
 	Type         int8          `json:"type"` //回复消息类型 1文本类型 2图片消息 3视频消息 4文件消息 5语音消息 6语音通话 7视频通话 8撤回消息 9回复消息 10引用消息
 	Content      *string       `json:"content"`
@@ -30,7 +18,19 @@ type Msg struct {
 	WithdrawMsg  *WithdrawMsg  `json:"withdrawMsg"`
 	ReplyMsg     *ReplyMsg     `json:"replyMsg"`
 	QuoteMsg     *QuoteMsg     `json:"quoteMsg"`
+	AtMsg        *AtMsg        `json:"atMsg"` //@用户的消息，只有群聊才有
 }
+
+func (c *Msg) Scan(val interface{}) error {
+	return json.Unmarshal(val.([]byte), c)
+}
+
+// Value 入库的数据
+func (c Msg) Value() (driver.Value, error) {
+	b, err := json.Marshal(c)
+	return string(b), err
+}
+
 type ImageMsg struct {
 	Title string `json:"title"`
 	Src   string `json:"src"`
@@ -71,6 +71,12 @@ type ReplyMsg struct {
 }
 type QuoteMsg struct {
 	MsgID   uint   `json:"msgID"`   //消息ID
+	Content string `json:"content"` //回复的文本消息，目前只能回复文本消息
+	Msg     *Msg   `json:"msg"`
+}
+
+type AtMsg struct {
+	UserID  uint   `json:"msgID"`   //消息ID
 	Content string `json:"content"` //回复的文本消息，目前只能回复文本消息
 	Msg     *Msg   `json:"msg"`
 }
