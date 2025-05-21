@@ -4,19 +4,11 @@ type LoginRequest {
 }
 
 type Response {
-	Code int    `json:"code"`
 	Data string `json:"data"`
-	Msg  string `json:"msg"`
-}
-
-type LoginInfo {
-	Token string `json:"token"`
 }
 
 type LoginResponse {
-	Code int       `json:"code"`
-	Data LoginInfo `json:"data"`
-	Msg  string    `json:"msg"`
+	Token string `json:"token"`
 }
 
 type OpenLoginInfo {
@@ -26,9 +18,7 @@ type OpenLoginInfo {
 }
 
 type OpenLoginInfoResponse {
-	Code int             `json:"code"`
 	Data []OpenLoginInfo `json:"data"`
-	Msg  string          `json:"msg"`
 }
 
 service auth {

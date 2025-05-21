@@ -3,7 +3,9 @@ module fim_server
 go 1.22.4
 
 require (
+	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/zeromicro/go-zero v1.8.3
+	golang.org/x/crypto v0.33.0
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.26.1
 )
@@ -17,7 +19,6 @@ require (
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-sql-driver/mysql v1.9.0 // indirect
-	github.com/golang-jwt/jwt/v4 v4.5.2 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.20.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect

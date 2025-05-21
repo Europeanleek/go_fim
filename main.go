@@ -18,7 +18,7 @@ func main() {
 	flag.BoolVar(&opt.DB, "db", false, "db")
 	flag.Parse()
 	if opt.DB {
-		db := core.InitMysql()
+		db := core.InitGorm("root:12345678@tcp(127.0.0.1:33069)/fim_server_db?charset=utf8mb4&parseTime=true")
 		err := db.AutoMigrate(
 			&user_models.UserModel{},         //用户表
 			&user_models.FriendModel{},       //好友表
