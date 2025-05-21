@@ -11,4 +11,14 @@ type Config struct {
 		AccessSecret string
 		AccessExpire int
 	}
+	Redis struct {
+		Addr string
+		Pwd  string
+		DB   int
+	}
+	OpenLoginList []struct {
+		Name string
+		Icon string
+		Href string
+	}
 }

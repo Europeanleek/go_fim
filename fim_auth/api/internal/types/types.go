@@ -10,14 +10,10 @@ type LoginResponse struct {
 	Token string `json:"token"`
 }
 
-type OpenLoginInfo struct {
+type OpenLoginInfoResponse struct {
 	Name string `json:"name"`
 	Icon string `json:"icon"`
 	Href string `json:"href"` // 跳转地址
-}
-
-type OpenLoginInfoResponse struct {
-	Data []OpenLoginInfo `json:"data"`
 }
 
 type Response struct {

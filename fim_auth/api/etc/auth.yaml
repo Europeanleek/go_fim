@@ -11,3 +11,14 @@ Log:
   Encoding: plain
   Stat: false
   TimeFormat: 2006-01-02 15:04:05
+Redis:
+  Addr: 127.0.0.1:6379
+  Pwd:
+  DB: 0
+OpenLoginList:
+  - Name: QQ登录
+    Icon: www.baidu.com
+    Href: www.baidu.com
+  - Name: 微信登录
+    Icon: www.baidu.com
+    Href: www.baidu.com
