@@ -1,0 +1,13 @@
+Name: userrpc.rpc
+ListenOn: 0.0.0.0:8080
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: userrpc.rpc
+Mysql:
+  DBSource: "root:12345678@tcp(127.0.0.1:33069)/fim_server_db?charset=utf8mb4&parseTime=true"
+Log:
+  ServiceName: auth
+  Encoding: plain
+  Stat: false
+  TimeFormat: 2006-01-02 15:04:05

@@ -1,0 +1,37 @@
+syntax = "proto3";  //声明使用 Protocol Buffers 的版本为 3
+
+//proto 包名
+package user_rpc;
+//生成 golang 代码后的包名
+option go_package ="./user_rpc";  //必须要有“./” 这样的路径
+//指定生成的 Go 代码的包名为 pb，在同一目录下创建一个名为 pb 的包
+
+//定义用户消息结构
+message UserCreateRequest {
+  string nick_name = 1;
+  string password = 2;
+  int32 role = 3;
+  string avatar = 4;
+  string open_id = 5;
+  string registration_source = 6;
+}
+
+message UserCreateResponse{
+    int32 user_id = 1;
+}
+
+message UserInfoRequest{
+  uint32 user_id=1;
+}
+message UserInfoResponse{
+  bytes data=1;
+}
+//定义了一个名为 user 的服务，提供了四个 RPC（Remote Procedure Call）方法，
+service user{
+  //创建用户
+  rpc UserCreate(UserCreateRequest) returns (UserCreateResponse); 
+  //获取用户信息
+  rpc UserInfo(UserInfoRequest) returns (UserInfoResponse);
+}
+
+// goctl rpc protoc user_rpc.proto --go_out-./types --go-grpc_out=./types --zrpc_out=./

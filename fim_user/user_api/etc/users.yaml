@@ -1,0 +1,20 @@
+Name: users
+Host: 0.0.0.0
+Port: 20022
+UserRpc:
+  Etcd:
+    Hosts:
+    - 127.0.0.1:2379
+    Key: userrpc.rpc
+Etcd: 127.0.0.1:2379
+Log:
+  ServiceName: auth
+  Encoding: plain
+  Stat: false
+  TimeFormat: 2006-01-02 15:04:05
+Redis:
+  Addr: 127.0.0.1:6379
+  Pwd:
+  DB: 0
+Mysql:
+  DBSource: "root:12345678@tcp(127.0.0.1:33069)/fim_server_db?charset=utf8mb4&parseTime=true"

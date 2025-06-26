@@ -1,0 +1,86 @@
+type UserInfoRequest {
+	UserID uint `header:"userID"`
+	Role   int8 `header:"role"`
+}
+
+type VerificationQuestion {
+	Problem1 *string `json:"problem1,optional" user_conf:"problem1"`
+	Problem2 *string `json:"problem2,optional" user_conf:"problem2"`
+	Problem3 *string `json:"problem3,optional" user_conf:"problem3"`
+	Answer1  *string `json:"answer1,optional" user_conf:"answer1"`
+	Answer2  *string `json:"answer2,optional" user_conf:"answer2"`
+	Answer3  *string `json:"answer3,optional" user_conf:"answer3"`
+}
+
+type UserInfoResponse {
+	UserID               uint                  `json:"userID"`
+	Nickname             string                `json:"nickname"`
+	Abstract             string                `json:"abstract"`
+	Avatar               string                `json:"avatar"`
+	RecallMessage        *string               `json:"recallMessage"`
+	FriendOnline         bool                  `json:"friendOnline"`
+	Sound                bool                  `json:"sound"`
+	SecureLink           bool                  `json:"secureLink"`
+	SavePwd              bool                  `json:"savePwd"`
+	SearchUser           int8                  `json:"searchUser"`
+	Verification         int8                  `json:"verification"`
+	VerificationQuestion *VerificationQuestion `json:"verificationQuestion"`
+}
+
+type UserInfoUpdateRequest {
+	UserID               uint                  `header:"userID"`
+	Nickname             *string               `json:"nickname,optional" user:"nick_name"`
+	Abstract             *string               `json:"abstract,optional" user:"abstract"`
+	Avatar               *string               `json:"avatar,optional" user:"avatar"`
+	RecallMessage        *string               `json:"recallMessage,optional" user_conf:"recall_message"`
+	FriendOnline         *bool                 `json:"friendOnline,optional" user_conf:"friend_online"`
+	Sound                *bool                 `json:"sound,optional" user_conf:"sound"`
+	SecureLink           *bool                 `json:"secureLink,optional" user_conf:"secure_link"`
+	SavePwd              *bool                 `json:"savePwd,optional" user_conf:"save_pwd"`
+	SearchUser           *int8                 `json:"searchUser,optional" user_conf:"search_user"`
+	Verification         *int8                 `json:"verification,optional" user_conf:"verification"`
+	VerificationQuestion *VerificationQuestion `json:"verificationQuestion,optional" user_conf:"verification_question"`
+}
+
+type UserInfoUpdateResponse {}
+
+type FriendInfoRequest {
+	UserID   uint `header:"userID"`
+	Role     int8 `header:"role"`
+	FriendID uint `form:"friendID"`
+}
+
+type FriendInfoResponse {
+	UserID   uint   `json:"userID"`
+	Nickname string `json:"nickname"`
+	Abstract string `json:"abstract"`
+	Avatar   string `json:"avatar"`
+	Notice   string `json:"notice"`
+}
+
+type FriendListRequest {
+	UserID uint `header:"userID"`
+	Role   int8 `header:"role"`
+	Page   int  `form:"page"`
+	Limit  int  `form:"list"`
+}
+
+type FriendListResponse {
+	List  []FriendInfoResponse `json:"list"`
+	Count int                  `json:"count"`
+}
+
+service users {
+	@handler UserInfo
+	get /api/users/user_info (UserInfoRequest) returns (UserInfoResponse)
+
+	@handler UserInfoUpdate
+	post /api/users/user_info (UserInfoUpdateRequest) returns (UserInfoUpdateResponse)
+
+	@handler FriendInfo
+	get /api/users/friend_info (FriendInfoRequest) returns (FriendInfoResponse)
+
+	@handler FriendList
+	get /api/users/friends (FriendListRequest) returns (FriendListResponse)
+} //goctl api go -api user_api.api -dir . --home ../../template
+

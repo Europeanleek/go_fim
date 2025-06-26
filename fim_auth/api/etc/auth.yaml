@@ -1,8 +1,8 @@
 Name: auth
 Host: 0.0.0.0
-Port: 8888
+Port: 20021
 Mysql:
-  DbSource: "root:12345678@tcp(127.0.0.1:33069)/fim_server_db?charset=utf8mb4&parseTime=true"
+  DBSource: "root:12345678@tcp(127.0.0.1:33069)/fim_server_db?charset=utf8mb4&parseTime=true"
 Auth:
   AccessSecret: dfff1234
   AccessExpire: 3600
@@ -15,6 +15,10 @@ Redis:
   Addr: 127.0.0.1:6379
   Pwd:
   DB: 0
+QQ:
+  AppID:
+  AppKey:
+  Redirect:
 OpenLoginList:
   - Name: QQ登录
     Icon: www.baidu.com
@@ -22,3 +26,13 @@ OpenLoginList:
   - Name: 微信登录
     Icon: www.baidu.com
     Href: www.baidu.com
+Etcd: 127.0.0.1:2379
+UserRpc:
+  Etcd:
+    Hosts:
+    - 127.0.0.1:2379
+    Key: userrpc.rpc
+WhiteList:
+  - /api/auth/login
+  - /api/auth/register
+  - /api/file/uploads/.*?/.*?

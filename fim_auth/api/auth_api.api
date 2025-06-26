@@ -11,10 +11,31 @@ type LoginResponse {
 	Token string `json:"token"`
 }
 
+type AuthRequest {
+	OriginUrl string `header:"origin_url,optional"`
+	Token     string `header:"token,optional"`
+}
+
+type AuthResponse {
+	UserID uint `json:"userID"`
+	Role   int  `json:"role"`
+}
+
 type OpenLoginInfoResponse {
 	Name string `json:"name"`
 	Icon string `json:"icon"`
 	Href string `json:"href"` // 跳转地址
+}
+
+type OpenLoginRequest {
+	Code string `json:"code"`
+	Flag string `json:"flag"`
+}
+
+type RegisterRequest {
+	NickName string `json:"nickname"`
+	Role     int32  `json:"role"`
+	Pwd      string `json:"pwd"`
 }
 
 service auth {
@@ -22,7 +43,7 @@ service auth {
 	post /api/auth/login (LoginRequest) returns (LoginResponse) // 登录接口
 
 	@handler authentication
-	post /api/auth/authentication returns (Response) // 认证接口
+	post /api/auth/authentication (AuthRequest) returns (AuthResponse) // 认证接口
 
 	@handler logout
 	post /api/auth/logout returns (Response) // 注销
@@ -31,6 +52,9 @@ service auth {
 	get /api/auth/open_login returns ([]OpenLoginInfoResponse) // 第三方登录的信息
 
 	@handler open_login
-	post /api/auth/open_login returns (LoginResponse) // 第三方登录
-} // goctl api go -api auth_api.api -dir .
+	post /api/auth/open_login (OpenLoginRequest) returns (LoginResponse) // 第三方登录
+
+	@handler register
+	post /api/auth/register (RegisterRequest) returns (Response)
+} // goctl api go -api auth_api.api -dir . --home ../../template
 

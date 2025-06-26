@@ -36,7 +36,7 @@ func (l *LogoutLogic) Logout(token string) (resp *types.Response, err error) {
 	payload, err := jwts.ParseToken(token, l.svcCtx.Config.Auth.AccessSecret)
 	now := time.Now()
 	expiration := payload.ExpiresAt.Time.Sub(now)
-	key := fmt.Sprintf("logout_%d", payload.UserID)
+	key := fmt.Sprintf("logout_%d_%s", payload.UserID, token)
 	l.svcCtx.Redis.SetNX(l.ctx, key, "", expiration)
 	return
 }
